@@ -5,7 +5,10 @@ set -e
 BUILD_DIR=$1
 CACHE_DIR=$2
 ENV_DIR=$3
-DOWNLOAD_URI=$(cat ${ENV_DIR}/MATTERMOST_DOWNLOAD_URI)
+MM_VERSION='5.27.0'
+DOWNLOAD_URI=$(cat ${ENV_DIR}/https://releases.mattermost.com/${MM_VERSION}/mattermost-${MM_VERSION}-linux-amd64.tar.gz)
+
+# DOWNLOAD_URI used to be based on MATTERMOST_DOWNLOAD_URI in app.json, but hard-coded here for simplified heroku deployments via github
 
 echo "-----> Retrieving mattermost tar from ${DOWNLOAD_URI}"
 curl -s -L "${DOWNLOAD_URI}" | tar -zxf - --strip-components=1 -C ${BUILD_DIR}
